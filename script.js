@@ -91,6 +91,28 @@ svg.selectAll("rect")
     .append("rect")
     .attr("x", function(csv,i){
     return xScale(i+2008)-5;}) //<--- set x values 
+    
+    //attempted tooltip: does not work... yet
+ .on("mouseover", function(csv) {
+        console.log(csv["aept"])
+    d3.select("#tooltip")
+    .style("left", (d3.event.pageX + 20) + "px")
+    .style("top", (d3.event.pageY - 25) + "px")
+    .select("#value")
+    .text("Annual Emissions for Public Transportation"),function(csv){
+        return csv["aept"];
+}
+    d3.select("#tooltip")
+    .classed("hidden", false)
+    })
+    
+    .on("mouseout", function() {
+        
+        
+    d3.select("#tooltip")
+    .classed("hidden", true);
+        
+    }) 
 
     .attr("y", function(csv){
         return height - yScale(csv.aec);
@@ -102,6 +124,7 @@ svg.selectAll("rect")
         return 20 ;
 })
     .style("fill","blue")
+ 
 
 
 svg2 = d3.select("svg")
@@ -126,6 +149,30 @@ svg.append("g").selectAll("rect")
         return 30 ;
 })
     .style("fill","rgb(0,0,139)")
+
+    
+    
+//tooltip for aec
+.on("mouseover", function(csv) {
+        console.log(csv["aec"])
+    d3.select("#tooltip")
+    .style("left", (d3.event.pageX + 20) + "px")
+    .style("top", (d3.event.pageY - 25) + "px")
+    .select("#value")
+    .text("Annual Emissions for Cars",function(csv){
+        return csv["aec"];
+})
+    d3.select("#tooltip")
+    .classed("hidden", false)
+    })
+    
+    .on("mouseout", function() {
+        
+        
+    d3.select("#tooltip")
+    .classed("hidden", true);
+        
+    }) 
     
 svg.selectAll("rect")
     .data(csv)
@@ -135,28 +182,6 @@ svg.selectAll("rect")
     .text(function(csv){
     return csv;
 }) 
-    
-.on("mouseover",function(hover){
-    //get bars x and y values
-    var xPosition = parseFloat(d3.select(this).attr("x"))+xScale.bandwidth()/2;
-    var yPosition = 
-        parseFloat(d3.select(this).attr("y")) + 14;
-//create tooltip label
-svg.append("text")
-    .attr("id","tooltip")
-    .attr("x", xPosition)
-    .attr("y", yPosition)
-    .attr("text-anchor","middle")
-    .attr("font-family", "sans-serif")
-    .attr("font-size","11")
-    .attr("font-weight","bold")
-    .attr("fill","black")
-    .text(hover);
-})
-    .on("mouseout", function(){
-        //remove tooltip 
-    d3.select("#tooltip").remove();
-})
 
 var line = d3.line()
     .defined(function(csv){return csv.elbtc >= 0 && csv.elbtc <= 350;})
@@ -177,7 +202,40 @@ svg.append("path")
     .attr("stroke-width",5)
     .attr("fill", "none")
     .attr("id","bottomline")
-  
+svg.selectAll("circle")
+    .datum(csv)
+    .enter()
+    .append("circle")
+    .attr("fill","rgb(139,0,0)")
+    .attr("stroke","none")
+    .attr("cx", function(csv){
+    console.log(csv)
+    return csv["Year "];
+})
+    .attr("cy", function(d){
+    console.log(d["elbtc"])
+    return d["elbtc"];
+})
+    .attr("r", 5)
+  //Tooltip for ElbtC
+ .on("mouseover", function(csv) {
+        console.log(csv["elbtc"]);  d3.select("#tooltip")
+    .style("left", (d3.event.pageX + 20) + "px")
+    .style("top", (d3.event.pageY - 25) + "px")
+    .text("Emission (lb/trip) for Cars",function(csv){
+        return csv["elbtc"];
+})
+    d3.select("#tooltip")
+    .classed("hidden", false)
+    })
+    
+    .on("mouseout", function() {
+        
+        
+    d3.select("#tooltip")
+    .classed("hidden", true);
+        
+    }) 
 svg.append("path")
     .datum(csv)
     .attr("class","line")
@@ -185,7 +243,42 @@ svg.append("path")
     .attr("stroke", "red")
     .attr("stroke-width",3)
     .attr("fill", "none")
-    .attr("id","topline");
+    .attr("id","topline")
+svg.selectAll("circle")
+    .datum(csv)
+    .enter()
+    .append("circle")
+    .attr("fill","red")
+    .attr("stroke","none")
+    .attr("cx", function(d){
+    return d["Year "];
+})
+    .attr("cy", function(d){
+    return d["elbtpt"];
+})
+    .attr("r", 5)
+  //tooltip for ElbtPT
+ .on("mouseover", function(csv) {
+        console.log(csv["elbtpt"]);
+    d3.select("#tooltip")
+    .style("left", (d3.event.pageX + 20) + "px")
+    .style("top", (d3.event.pageY - 25) + "px")
+    .text("Emissions (lbs/trip) for Public Transportation",function(csv){
+        return csv["elbtpt"];
+})
+    d3.select("#tooltip")
+    .classed("hidden", false)
+    })
+    
+    .on("mouseout", function() {
+        
+        
+    d3.select("#tooltip")
+    .classed("hidden", true);
+        
+    }) 
+    
+
 
 /*
 svg2 = d3.select("svg")
@@ -261,6 +354,30 @@ var printout5 = function(csv)
     })
     console.log(elbtpt)
 }
+
+
+d3.select("body")
+    .append("p")
+    .style("font-size", "30px")
+    .attr("x", 500)
+    .text("Left Axis: Emissions in Million Metric Tons")
+d3.select("body")
+    .append("p")
+    .style("font-size", "30px")
+    .attr("x", 500)
+    .text("Right Axis: Emissions in Pounds per Trip")
+d3.select("body")
+    .append("p")
+    .style("font-size", "30px")
+    .attr("x", 500)
+    .text("Dark Colored: Cars")
+d3.select("body")
+    .append("p")
+    .style("font-size", "30px")
+    .attr("x", 500)
+    .text("Light Colored: Public Transportation")
+
+console.log("oy")
 
 
 

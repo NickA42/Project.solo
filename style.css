@@ -5,7 +5,11 @@ body
     
     
 }
-
+h1{
+    font-size: 50px;
+    border-style: ridge;
+    align-content: center;
+}
 svg{
     width: 800px;
     height: 600px;
@@ -19,4 +23,17 @@ svg{
 }
 #yRightAxis{
     color:red
+}
+#tooltip{
+    position: absolute;
+    width:auto;
+    height:auto;
+}
+#tooltip.hidden{
+    display: none;
+}
+#tooltip p{
+    margin: 1;
+    font-family:sans-serif; font-size: 18px;
+    line-height:15px;
 }
