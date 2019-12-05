@@ -1,0 +1,22 @@
+body 
+{
+    background-color: chartreuse;    
+    background-repeat: no-repeat;
+    
+    
+}
+
+svg{
+    width: 800px;
+    height: 600px;
+    background-color: aliceblue;
+    margin-left: 100px;
+   
+}
+
+#yAxis{
+    color: blue
+}
+#yRightAxis{
+    color:red
+}
