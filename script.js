@@ -6,7 +6,7 @@ var promise = d3.csv("CS.csv")
         printout4(csv)
         printout5(csv)*/
         drawthefuckinggraph(csv)
-        drawLegend(csv)
+      
         
         
     },
@@ -29,7 +29,7 @@ d3.select("svg")
 
 var xScale = d3.scaleLinear(printout)
                 .domain([2007,2017])
-                .range([margins.left,width-margins.right-50])
+                .range([0,width])
 var yScale = d3.scaleLinear()
                 .domain([0,1100])
                 .range([height,0])
@@ -85,12 +85,12 @@ d3.scaleBand()
     .paddingInner(0.05);
     
 //create bars 
-svg.selectAll("rect")
+svg.select("#graph").selectAll("rect")
     .data(csv)
     .enter()
     .append("rect")
     .attr("x", function(csv,i){
-    return xScale(i+2008)-5;}) //<--- set x values 
+    return xScale(i+2007)-5;}) //<--- set x values 
     
     //attempted tooltip: does not work... yet
  .on("mouseover", function(csv) {
@@ -98,8 +98,8 @@ svg.selectAll("rect")
     d3.select("#tooltip")
     .style("left", (d3.event.pageX + 20) + "px")
     .style("top", (d3.event.pageY - 25) + "px")
-    .select("#value")
-    .text("Annual Emissions for Public Transportation",function(csv){
+    //.select("#value")
+    .text(function(){
         return csv["aept"];
 })
     d3.select("#tooltip")
@@ -115,10 +115,11 @@ svg.selectAll("rect")
     }) 
 
     .attr("y", function(csv){
-        return height - yScale(csv.aec);
+        return yScale(csv.aept);
 })
     .attr("height", function(csv){
-        return yScale(csv.aec);
+        console.log(csv,height)
+        return height - yScale(csv.aept);
 })
     .attr("width", function(csv){
         return 20 ;
@@ -132,21 +133,21 @@ svg2 = d3.select("svg")
     .attr("height", height);
     
 //create bars 
-svg.append("g").selectAll("rect")
+svg.select("#graph").append("g").selectAll("rect")
     .data(csv)
     .enter()
     .append("rect")
     .attr("x", function(csv,i){
-    return xScale(i+2008)+17;
-})
-    .attr("y", function(csv){
-        return height - yScale(csv.aept);
+    return xScale(i+2007)+17;
 })
     .attr("height", function(csv){
-        return yScale(csv.aept);
+        return height - yScale(csv.aec);
+})
+    .attr("y", function(csv){
+        return yScale(csv.aec);
 })
     .attr("width", function(csv){
-        return 30 ;
+        return 30;
 })
     .style("fill","rgb(0,0,139)")
 
@@ -158,10 +159,10 @@ svg.append("g").selectAll("rect")
     d3.select("#tooltip")
     .style("left", (d3.event.pageX + 20) + "px")
     .style("top", (d3.event.pageY - 25) + "px")
-    .select("#value")
-    .text("Annual Emissions for Cars",function(csv){
+    .text(function(){
         return csv["aec"];
-})
+    
+    })
     d3.select("#tooltip")
     .classed("hidden", false)
     })
