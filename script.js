@@ -99,9 +99,9 @@ svg.selectAll("rect")
     .style("left", (d3.event.pageX + 20) + "px")
     .style("top", (d3.event.pageY - 25) + "px")
     .select("#value")
-    .text("Annual Emissions for Public Transportation"),function(csv){
+    .text("Annual Emissions for Public Transportation",function(csv){
         return csv["aept"];
-}
+})
     d3.select("#tooltip")
     .classed("hidden", false)
     })
@@ -360,12 +360,12 @@ d3.select("body")
     .append("p")
     .style("font-size", "30px")
     .attr("x", 500)
-    .text("Left Axis: Emissions in Million Metric Tons")
+    .text("Left Axis: Emissions in Million Metric Tons (BLUE)")
 d3.select("body")
     .append("p")
     .style("font-size", "30px")
     .attr("x", 500)
-    .text("Right Axis: Emissions in Pounds per Trip")
+    .text("Right Axis: Emissions in Pounds per Trip (RED)")
 d3.select("body")
     .append("p")
     .style("font-size", "30px")
@@ -416,4 +416,3 @@ gs.append("text")
     .attr("y",10)
     .attr("fill","black")
 }*/
-
