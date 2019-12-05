@@ -203,27 +203,25 @@ svg.append("path")
     .attr("stroke-width",5)
     .attr("fill", "none")
     .attr("id","bottomline")
-svg.selectAll("circle")
-    .datum(csv)
+svg.select("#graph").selectAll("circle")
+    .data(csv)
     .enter()
     .append("circle")
     .attr("fill","rgb(139,0,0)")
     .attr("stroke","none")
-    .attr("cx", function(csv){
-    console.log(csv)
-    return csv["Year "];
+   .attr("cx", function(d){
+    return xScale(d["Year "]);
 })
     .attr("cy", function(d){
-    console.log(d["elbtc"])
-    return d["elbtc"];
+    return yScale2(d["elbtc"]);
 })
-    .attr("r", 5)
+    .attr("r", 7)
   //Tooltip for ElbtC
  .on("mouseover", function(csv) {
         console.log(csv["elbtc"]);  d3.select("#tooltip")
     .style("left", (d3.event.pageX + 20) + "px")
     .style("top", (d3.event.pageY - 25) + "px")
-    .text("Emission (lb/trip) for Cars",function(csv){
+    .text(function(){
         return csv["elbtc"];
 })
     d3.select("#tooltip")
@@ -245,26 +243,26 @@ svg.append("path")
     .attr("stroke-width",3)
     .attr("fill", "none")
     .attr("id","topline")
-svg.selectAll("circle")
-    .datum(csv)
+svg.select("#graph").append("g").selectAll("circle")
+    .data(csv)
     .enter()
     .append("circle")
     .attr("fill","red")
     .attr("stroke","none")
-    .attr("cx", function(d){
-    return d["Year "];
+   .attr("cx", function(d){
+    return xScale(d["Year "]);
 })
     .attr("cy", function(d){
-    return d["elbtpt"];
+    return yScale2(d["elbtpt"]);
 })
-    .attr("r", 5)
+    .attr("r", 7)
   //tooltip for ElbtPT
  .on("mouseover", function(csv) {
         console.log(csv["elbtpt"]);
     d3.select("#tooltip")
     .style("left", (d3.event.pageX + 20) + "px")
     .style("top", (d3.event.pageY - 25) + "px")
-    .text("Emissions (lbs/trip) for Public Transportation",function(csv){
+    .text(function(){
         return csv["elbtpt"];
 })
     d3.select("#tooltip")
