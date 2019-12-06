@@ -17,7 +17,7 @@ var promise = d3.csv("CS.csv")
 var drawthefuckinggraph = function(csv)
 {
     var screen = {width:800,height:600}
-    var margins = {top:10,right:50,bottom:50,left:50}
+    var margins = {top:10,right:50,bottom:50,left:100}
     var width = screen.width - margins.left - margins.right
     var height = screen.height - margins.top - margins.bottom
     
@@ -54,13 +54,30 @@ d3.select(".axis")
 d3.select(".axis")
     .append("g")
     .attr("id","yAxis")
-    .attr("transform","translate(49.5,"+margins.top+")")
+    .attr("transform","translate(90,"+margins.top+")")
     .call(yAxis)
+    
+d3.select("svg")
+    .append("text")
+    .text("Annual Emissions per Year")
+    .attr("transform","translate(35,420) rotate(-90)")
+    .attr("font-size", "30px");
+d3.select("svg")
+    .append("text")
+    .text("Emissions: Pounds per Trip")
+    .attr("transform","translate(850,100) rotate(90)")
+    .attr("font-size", "30px");
+d3.select("svg")
+    .append("text")
+    .text("Years")
+    .attr("transform","translate(400,600) ")
+    .attr("font-size", "30px");
+    
     
 d3.select(".axis")
     .append("g")
     .attr("id","yRightAxis")
-    .attr("transform","translate(770,"+margins.top+")")
+    .attr("transform","translate(800,"+margins.top+")")
     .call(yRightAxis)
 
 var arrays = d3.select("#graph")
@@ -71,6 +88,8 @@ var arrays = d3.select("#graph")
     .attr("fill", "red")
     .attr("stroke", "black")
     .attr("stroke-width", 1)
+    .attr("transform","translate(100,"+margins.top+")")
+
 
 //create svg element 
 var svg = d3.select("svg")
@@ -186,16 +205,16 @@ svg.selectAll("rect")
 
 var line = d3.line()
     .defined(function(csv){return csv.elbtc >= 0 && csv.elbtc <= 350;})
-    .x(function(csv) {return xScale(parseInt(csv['Year ']))+50;})
+    .x(function(csv) {return xScale(parseInt(csv['Year ']));})
     .y(function(csv) {return yScale2(parseFloat(csv.elbtc));});
 
 var line2 = d3.line()
     .defined(function(csv){return csv.elbtpt >= 0 && csv.elbtpt <= 350;})
-    .x(function(csv) {return xScale(parseInt(csv['Year ']))+50;})
+    .x(function(csv) {return xScale(parseInt(csv['Year ']));})
     .y(function(csv) {return yScale2(parseFloat(csv.elbtpt));});
 
 //create line 
-svg.append("path")
+svg.select("#graph").append("path")
     .datum(csv)
     .attr("class","line")
     .attr("d", line)
@@ -235,7 +254,7 @@ svg.select("#graph").selectAll("circle")
     .classed("hidden", true);
         
     }) 
-svg.append("path")
+svg.select("#graph").append("path")
     .datum(csv)
     .attr("class","line")
     .attr("d", line2)
@@ -359,25 +378,25 @@ d3.select("body")
     .append("p")
     .style("font-size", "30px")
     .attr("x", 500)
-    .text("Left Axis: Emissions in Million Metric Tons (BLUE)")
+    .text("Annual Emissions per Year: Bar (BLUE) ")
 
 d3.select("body")
     .append("p")
     .style("font-size", "30px")
     .attr("x", 500)
-    .text("Right Axis: Emissions in Pounds per Trip (RED)")
+    .text("Emissions in Pounds per Trip: Line (RED)")
 
 d3.select("body")
     .append("p")
     .style("font-size", "30px")
     .attr("x", 500)
-    .text("Dark Colored: Cars")
+    .text("Dark Colored: Emissions from Cars")
 
 d3.select("body")
     .append("p")
     .style("font-size", "30px")
     .attr("x", 500)
-    .text("Light Colored: Public Transportation")
+    .text("Light Colored: Emissions from Public Transportation")
 
 console.log("oy")
 

@@ -24,8 +24,8 @@ h1{
     border-color:red;
 }
 svg{
-    width: 800px;
-    height: 600px;
+    width: 900px;
+    height: 650px;
     background-color: aliceblue;
     margin-left: 680px;
     margin-top: -280px;
@@ -37,10 +37,14 @@ svg{
     color: blue
 }
 #yRightAxis{
-    color:red
+    color:red;
 }
 
 
+
+#topline{
+    
+}
 
 
 
@@ -55,6 +59,8 @@ svg{
     border-radius:10px;
     box-shadow: 4px 4px 10px rgba(0,0,0,0.4);
     pointer-events: none;
+    border: ridge;
+    border-color: black;
     
 }
 
